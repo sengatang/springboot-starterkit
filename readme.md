@@ -50,20 +50,22 @@
 12. [License](#License)
 
 ## Philosophy ##
-A lot of work has gone into Spring Boot to reduce complexity and dependencies, which largely alleviates our previous reservations. If you live in a Spring ecosystem and are moving to microservices, Spring Boot is now the obvious choice. Spring Boot allows easy set up of standalone Spring-based applications. It's ideal for pulling up new microservices and easy to deploy. It also makes data access less of a pain due to the hibernate mappings with much less boilerplate code. You can get started with minimum fuss due to it taking an opinionated view of the Spring platform and third-party libraries. Most Spring Boot applications need very little Spring configuration. 
+Spring boot 为了减少负责性与依赖性花了很大的力气，如果你的代码是在 Spring 的生态中并且想要转向微服务，Spring boot 是一个非常好的选择。它允许轻松设置独立的基于 Spring 的应用程序，是简单快速地建立与部署微服务的理想选择。由于 hibernate 映射使用了更少的boilerplate 代码，它还可以减少数据访问的痛苦。你可以从很简单的代码入手，因为它对 Spring 平台和第三方库持一种“固执己见”的观点。 绝大部分的 Spring Boot 的应用只需要很少的 Spring 的设置。
 
-The greatest thing about Spring Boot is the ability to be up and running in very little time. You don’t have to install a web server like JBoss, Websphere, or even Tomcat for that matter. All you need to do is pull in the proper libraries, annotate, and fire away. If you are going to do a lot of Spring Boot projects, I would highly suggest using the IntelliJ IDEA IDE. It has some great features for making Boot projects really easy to manage. You can of course choose between Maven or Gradle to manage dependencies and builds. This starter kit is based on Maven as it is what I am familiar and slightly more comfortable with. 
+Spring Boot 最迷人的地方在用很短的时间就可以跑起一个 server，你不需要安装像 JBoss, Websphere, Tomcat 之类的东西。你只需要把需要的库、注解配置好就可以起飞了。如果你有很多个 Spring Boot 的项目，我强烈推荐使用 IntelliJ IDEA IDE，它有很好的管理 Boot 项目的功能。你可以在 Maven 或者 Gradle 中选择一个来管理依赖。这个 starter kit 使用的是（我更熟悉的）Maven。
+
 
 ## Spring Boot ##
-_Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can just run. We take an opinionated view of the Spring platform and third-party libraries so you can get started with minimum fuss. Most Spring Boot applications need very little Spring configuration._
+_Spring Boot 使得创建独立的，生产级别的，基于 Spring 的应用非常简单。因为它对 Spring 平台和第三方库持一种“固执己见”的观点，绝大部分的 Spring Boot 的应用只需要很少的 Spring 的设置_
 
-**Spring Boot is opinionated** : This simply means that Spring Boot has its own configurations, application structures, dependencies, Servers and other environment configuration available inside its realm. Thus, to say Spring Boot has its own opinions about an application development environment. For example, most of the Java-based web applications use tomcat server. While working on Spring Boot you need not use any server, because Spring Boot already has an embedded tomcat container.
+**Spring Boot 是 “固执己见的(opinionated)”** : “固执己见”在这里指的是 Spring Boot 有自己的设置，项目结构，依赖，服务以及其他一些环境配置。 例如，绝大数的 Java-based web applications 使用 tomcat Server。但是当使用 Boot 的时候你不用另外任何的 Server，因为 Boot 自己有一个内嵌的 tomcat 容器。
 
-**Spring Boot is stand-alone** : What it means is that you don’t need to use any other third-party library or server to run or develop a spring boot application, it already has all of it.
+**Spring Boot 是 “独立的(stand-alone)”** : 指的是你不需要在开发或者部署 server 的过程中再用第三方的库，它就像一个全家桶。
 
-**It is production-grade** : This implies that application developed using Spring Boot defaults is able to handle all complexities and requirements of a production environment.
+**Spring Boot 是 “生产级别的(production-grade)”** : 意味着使用 Spring Boot 默认开发的应用程序能够处理生产环境的所有复杂性和需求.
 
-**Still very customizable** : It is not worth using a framework which has its own rigid opinions, which you can’t customize or change according to your own business requirements. Although Spring Boot is opinionated you can easily change or customize its defaults to suit your own needs. 
+**Spring Boot 依然 “高度可自定义化(customizable)”** :用一个非常僵硬的，不能根据自己业务需求定制或更改的框架是非常不值当的。虽然 Boot 是“固执己见的”，你依旧可以非常简单地对它进行改变来迎合你自己的需求。
+
 
 ## Application ##
 This starter kit focuses on how to use Spring Boot following all the best practices that are recommended by Spring Framework 5.0, ensure the code is loosely coupled and that all the layers in the application are completely independent of each other and talk using neutral objects. While writing this kit, I have done sufficient research around the code structure and usage of appropriate design patterns to make this as an excellent starting point to begin coding your own web application.
