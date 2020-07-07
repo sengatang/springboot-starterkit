@@ -49,7 +49,7 @@
 11. [Contributor](#Contributor)
 12. [License](#License)
 
-## Philosophy ##
+## Philosophy 思想 ##
 Spring boot 为了减少负责性与依赖性花了很大的力气，如果你的代码是在 Spring 的生态中并且想要转向微服务，Spring boot 是一个非常好的选择。它允许轻松设置独立的基于 Spring 的应用程序，是简单快速地建立与部署微服务的理想选择。由于 hibernate 映射使用了更少的boilerplate 代码，它还可以减少数据访问的痛苦。你可以从很简单的代码入手，因为它对 Spring 平台和第三方库持一种“固执己见”的观点。 绝大部分的 Spring Boot 的应用只需要很少的 Spring 的设置。
 
 Spring Boot 最迷人的地方在用很短的时间就可以跑起一个 server，你不需要安装像 JBoss, Websphere, Tomcat 之类的东西。你只需要把需要的库、注解配置好就可以起飞了。如果你有很多个 Spring Boot 的项目，我强烈推荐使用 IntelliJ IDEA IDE，它有很好的管理 Boot 项目的功能。你可以在 Maven 或者 Gradle 中选择一个来管理依赖。这个 starter kit 使用的是（我更熟悉的）Maven。
@@ -67,64 +67,80 @@ _Spring Boot 使得创建独立的，生产级别的，基于 Spring 的应用�
 **Spring Boot 依然 “高度可自定义化(customizable)”** :用一个非常僵硬的，不能根据自己业务需求定制或更改的框架是非常不值当的。虽然 Boot 是“固执己见的”，你依旧可以非常简单地对它进行改变来迎合你自己的需求。
 
 
-## Application ##
-This starter kit focuses on how to use Spring Boot following all the best practices that are recommended by Spring Framework 5.0, ensure the code is loosely coupled and that all the layers in the application are completely independent of each other and talk using neutral objects. While writing this kit, I have done sufficient research around the code structure and usage of appropriate design patterns to make this as an excellent starting point to begin coding your own web application.
 
-The kit would have been incomplete if it did not have a concrete use case to implement, here I have taken a case study of a _Bus Reservation System_ and tried to implement an Admin portal which can be operated over browsers and a series of REST APIs to interact with the system using mobile applications or frontend applications written for the browsers. The complete systems has two important actors :
 
-1. Admin user
-2. End user
+## Application 应用 ##
+这个 starter kit 主要关注如何按照 Spring Framework 5.0 推荐的所有最佳实践来使用 Spring Boot，确保代码是松耦合的，应用程序中的所有层彼此完全独立，并且使用中性对象进行对话。写这个 kit 的时候我做了多关于**代码结构**和**设计模式**的研究来使这个 kit 可以成为你编写你的 web application 的很好的一个起点。
 
-The _Admin user_ can access this application on browser (laptop or mobile/tablet, doesn't really matter as this is built using bootstrap, material design and is completely responsive) and can perform the following actions :
 
-1. Signup
-2. Login (Spring sessions)
-3. Update their profile
-4. Create an agency
-5. Add buses to the agency
-6. Add trips consisting of predefined stops and buses
- 
-The _End user_ can use their mobile application (yet to be built, however the REST APIs are ready and could be used via Postman or Swagger) to perform the following actions :
 
-1. Signup
-2. Login (and get a JWT token) 
-3. List all available stops
-4. Search a trip between any two stops
-5. Filter search results with a date option
-6. Book a ticket for a given trip schedule
+如果没有一个实现一个具体的东西的话，这个 kit 就不完整了，所以我仔细对***汽车预定系统***做了案例研究并尝试实现一个后台管理系统。它可以经由浏览器和移动应用程序，通过一系列 REST 接口与系统进行交互。这个系统有两个重要的角色：
 
-Admin interface and REST APIs both have their independent authentication mechanisms, the web application uses the cookie based authentication (provided by default by Spring security) and the REST API uses the JWT authentication for access. This application assumes the availability of 'MongoDB' installation on the localhost where the server will run or the use of docker-compose to boot up a mongodb container and link the application with it within the realm of docker.
+1. 管理员
+2. 普通端用户
 
-Any changes that the admin users will do on the web portal will impact the search results of the end users, there will be certain use cases which you may find missing here, I hope you will appreciate that the overall idea was to present a way to create such an application completely inside the realm of Spring Boot and not to actually building a fully functional reservation system.
 
-The admin user interface is completely written in material design using Bootstrap v4 and is responsive to suite a variety of devices. The template engine used to render the admin views is Thymeleaf since the library is extremely extensible and its natural templating capability ensures templates can be prototyped without a back-end – which makes development very fast when compared with other popular template engines such as JSP.
 
-## Database Schema ##
-The current schema looks as follows:
+*管理员*可以有下述一些操作：
+
+1. 注册
+2. 登陆 (Spring sessions)
+3. 更新资料
+4. 创建一个汽车中介
+5. 往汽车中介里添加汽车
+6. 添加包含预定义站点和公共汽车的行程
+
+
+
+*端用户*可以有下述操作
+
+1. 注册
+2. 登陆 (获取 JWT token) 
+3. 列出所有可用站点
+4. 查询两个站点之间的行程
+5. 通过时间筛选上述搜索结果
+6. 预定一个行程的票
+
+
+
+管理员接口和 REST API 有各自独立的身份验证机制。web application 使用*基于 cookie 的身份验证*（由Spring security默认提供），REST API 使用 *JWT 身份验证* 进行访问。此应用程序假定在运行服务器的本地主机上安装 “MongoDB”，或使用 docker-compose 启动 MongoDB 容器并在 docker 内将应用程序与其链接。
+
+管理员在网站上所做的任何更改操作都会影响端用户的搜索结果，在这里你可能会发现缺少某些用例，希望你可以理解这个项目的主要目的是展现如何在 Spring Boot 中创建一个应用程序，而不是构建一个功能齐全的预订系统。
+
+管理用户 UI 是用 Bootstrap v4 写的，能够响应各种设备。前端引擎是 Thymeleaf，因为该库具有极强的可扩展性，其自然的模板功能确保模板可以在没有后端的情况下进行原型化，这使得开发与其他流行的引擎（如JSP）相比非常快。
+
+
+
+## Database Schema 数据库 ##
+现在的数据库设计是这样的：
 
 <img src="https://github.com/khandelwal-arpit/springboot-starterkit/blob/master/docs/images/db-schema.png" alt="spring boot"></a>
 
-- The authentication and authorization is governed by _User_ and _Role_ collection.
-- The _Agency_ collection keeps the details of agency along with who owns it.
-- The _Stop_ collection keeps the data about all the stops in the system.
-- The _Bus_ collection has the data of all the buses for various agencies along with their capacity and make years.
-- The _Trip_ and _TripSchedule_ collections keep the information about all the trips that agency owners create within the system. Information like source and destination stops, journey time, data of travel, tickets sold so far and the available seats is collected in them.
-- Last, the _Ticket_ collection keeps information about all the tickets issued in the application for various trips.
-  
-## Technology ##
-Following libraries were used during the development of this starter kit :
-
-- **Spring Boot** - Server side framework
-- **Docker** - Containerizing framework
-- **MongoDB** - NoSQL database 
-- **Swagger** - API documentation
-- **Thymeleaf** - Templating engine
-- **Material** - UI themeing/design
-- **Bootstrap** - CSS framework
-- **JWT** - Authentication mechanism for REST APIs
+-  authentication 和 authorization 由 _User_ 和 _Role_ collection控制.
+-  _Agency_ collection 存储汽车中介的信息与所有者
+- _Stop_ collection 存储系统中所有的站点
+- _Bus_ collection 存储系统中所有的汽车，核载人数，生产年限和所属中介
+- _Trip_ 和 _TripSchedule_ collection 存储行程的始发站，终点站，行程时间日期，所售出车票与所剩余座位信息
+- _Ticket_ collection 存储着所发售车票的所有信息
 
 
-## Application Structure ##
+
+## Technology 技术 ##
+这个 starter kit 用到了以下的库:
+
+- **Spring Boot** - 后端服务器框架
+- **Docker** - Containerizing 框架
+- **MongoDB** - NoSQL 数据库
+- **Swagger** - API 文档
+- **Thymeleaf** - 框架引擎
+- **Material** - UI 主题
+- **Bootstrap** - CSS 框架
+- **JWT** - REST API 的身份认证机制
+
+
+
+
+## Application Structure 应用结构 ##
 Spring Boot is an opinionated framework that makes our life very easy since we don't have to choose the versions of different dependencies based on the version of Spring framework, its all taken care of by Spring Boot. I have tried to follow the same ideology while creating the project structure, at first it might seem like overwhelming, but do believe me once you start writing your pieces the structure will help you immensely by saving your time and thinking about questions which are already answered. The structure look as follows :
 
 <img src="https://github.com/khandelwal-arpit/springboot-starterkit/blob/master/docs/images/project-structure.png" alt="project structure"></a>
