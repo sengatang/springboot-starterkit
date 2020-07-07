@@ -141,31 +141,33 @@ _Spring Boot 使得创建独立的，生产级别的，基于 Spring 的应用�
 
 
 ## Application Structure 应用结构 ##
-Spring Boot is an opinionated framework that makes our life very easy since we don't have to choose the versions of different dependencies based on the version of Spring framework, its all taken care of by Spring Boot. I have tried to follow the same ideology while creating the project structure, at first it might seem like overwhelming, but do believe me once you start writing your pieces the structure will help you immensely by saving your time and thinking about questions which are already answered. The structure look as follows :
+Spring Boot 是一个 “固执己见” 的框架，它使我们的生活变得非常简单，因为我们不必根据 Spring 框架的版本来选择不同的依赖的版本，所有这些都由 Spring Boot 负责。在创构建目结构时，我试图遵循相同的思想，一开始它可能看起来很复杂不知从何下手，但请相信我，一旦你开始写代码，这个结构将极大地帮助你节省在*已经得到回答的问题*上思考的时间。项目结构如下：
 
 <img src="https://github.com/khandelwal-arpit/springboot-starterkit/blob/master/docs/images/project-structure.png" alt="project structure"></a>
 
 **_Models & DTOs_**
 
-The various models of the application are organized under the **_model_** package, their DTOs(data transfer objects) are present under the **_dto_** package. There are different opinions about whether we should use DTOs or not, I belong to the set of minds who think we definitely should and not using DTOs makes your model layer very tightly coupled with the UI layer and that is something that no enterprise project should ever get into. DTOs let us transfer only the data that we need to share with the user interface and not the entire model object that we may have aggregated using several sub-objects and persisted in the database. The mapping of models to the DTOs can be handled using ModelMapper utility, however its only useful when your DTO is almost similar (literally) to the concerned models which is not always the case and hence I prefer using custom mapper classes. You can find some examples under the dto/mapper package.
+应用程序的各种 model 在 ***model*** package 中，**DTO** (data transfer objects) 在 ***dto*** package 中。是否应该使用 DTO 是一件有争议的事情，我认为是要使用的，如果不用 DTO 的话会使得 model 和 UI 耦合非常紧密，这是任何企业项目都不想这样。DTO 使得我们可以只把前端需要的数据传给他们，而不是传整个 model，这个 model 可能由和其他 sub objects 聚合并持久化在数据库中（即模型非常复杂）。模型到 DTO 的映射可以使用 ModelMapper utility 来处理，但是只有当 DTO 与相关模型几乎相似时才有用，而事实并非总是如此，因此我更喜欢使用自定义映射器类。你可以在 dto/mapper package 下找到一些示例。
 
 **_DAOs_**
 
-The data access objects (DAOs) are present in the **_repository_** package. They are all extensions of the MongoRepository Interface helping the service layer to persist and retrieve the data from MongoDB. The service layer is defined under the **_service_** package, considering the current case study it made sense to create two basic services - UserService and BusReservationService to satisfy the different business operations that the users are executing using the UI.
+数据访问对象（DAO）位于***repository***  package中。它们都 extends MongoRepository Interface ，帮助服务层持久化并从 MongoDB检索数据。服务层是在 ***servicc***  package下定义的，考虑到当实现的系统（即车票预定系统），有必要创建两个基本服务——UserService 和 BusReservationService，以满足用户执行的不同业务操作。
 
 **_Security_**
 
-The security setting are present under the **_config_** package and the actual configurations are done under the class present in the **_security_** package. The application has different security concepts for the admin portal and the REST APIs, for the portal I have applied the default spring session mechanism that is based on the concept of sessionID and cookies. For the REST APIs I have used JWT token based authentication mechanism.
+与 security 相关的设置都在的***config*** package 中，实际配置在**security package 中的类下完成。应用程序对管理员和 REST API 采用了不同的技术，对于对管理员应用了基于 sessionID 和 cookies 概念的默认 spring 会话机制。对于 REST API，使用了基于 JWT 令牌的身份验证机制。
 
 **_Controllers_**
 
-Last, but the most important part is the controller layer. It binds everything together right from the moment a request is intercepted till the response is prepared and sent back. The controller layer is present in the **_controller_** package, the best practices suggest that we keep this layer versioned to support multiple versions of the application and the same practice is applied here. For now code is only present under v1 but over the time I expect to have different versions having different features. The Admin portal related controllers are present in the **_ui_** package and its concerning form command objects are located under the **_command_** package. The REST API controllers are located under the **_api_** package and the corresponding request classes are located under the **_request_** package. 
+最重要的部分是控制器层（ controller layer）。它把所有从截获请求的那一刻，一直到准备好并发回响应的东西都绑定在一起。控制器层存在于***controller*** package 中，最佳实践建议我们保持此层的版本以支持应用程序的多个版本，这里也应用了相同的做法。目前代码只在v1下出现，但随着时间的推移，我希望有不同的版本、不同的特性。与管理员相关的控制器位于***ui*** package 中，其相关的表单控制对象位于***command*** package 下。 REST API 的控制器位于 ***api*** package 下，相应的请求类位于**_request_** pacakge 中。
 
 **_Request and Form Commands_**
 
-Again, there are different opinions amongst the fraternity regarding the usage of separate classes for mapping the incoming request vs using the DTOs, I am personally a fan of segregating the two as far as possible to promote loose coupling amongst UI and controller layer. The request objects and the form commands do give us a way to apply an additional level of validations on the incoming requests before they get converted to the DTOs which transfer valid information to the service layer for persistence and data retrieval. We could use DTOs here and some developers prefer that approach as it reduces some additional classes, however I usually prefer to keep the validation logic separate from the transfer objects and hence am inclined to use the request/command objects ahead of them.
+各位同仁在是否需要使用不同的类来映射传入的请求与使用DTO之间有不同的观点。就我个人而言我是希望尽可能地将这两个类分开来，以保证 UI 和 Controller 之间的松耦合。request 对象和表单命令确实为我们提供了一个可以在他们到达 DTO 层之前做一些额外的数据验证。我们也可以直接用 DTO 来进行数据验证（确实有人喜欢这种方法），因为它减少了一些额外的类，但是我通常更喜欢将验证逻辑与传输对象分开，因此倾向于在它们之前使用请求/命令对象。
 
-The static resources are grouped under the **_resources_** directory. All the UI objects and their styling aspects can be located here.
+
+
+静态资源都在 ***resources*** 文件夹下. 所有UI对象及其样式方面都可以在这里找到。
 
 ## Response and Exception Handling ##
 I have tried to experiment a bit with the RuntimeExceptions and come up with a mini framework for handling the entire application's exceptions using a few classes and the properties file. If you carefully observe the **_exception_** package, it consists of two enums - EntityType and ExceptionType. The EntityType enum contains all the entity names that we are using in the system for persistence and those which can result in a run time exception. The ExceptionType enum consists of the different entity level exceptions such as the EntityNotFound and DuplicateEntity exceptions. 
@@ -180,7 +182,7 @@ throw exception(USER, ENTITY_NOT_FOUND, userDto.getEmail());
 
 This results in clubbing the names of these two enums USER(user) and ENTITY_NOT_FOUND(not.found) and coming up with a key _user.not.found_ which is present in the custom.properties files as follows :
 
-``` 
+``` java
 user.not.found=Requested user with email - {0} does not exist.
 ```
 By simply replacing the {0} param with the email address included in the thrown exception you can get a well formatted message to be shown to the user or to be sent back as the response of the REST API call.
@@ -189,7 +191,7 @@ Another important part of this mini framework is the **_CustomizedResponseEntity
 
 Last, the API response are all being sent in a uniform manner using the **_Response_** class present in the dto/response package. This class allows us to create uniform objects which result in a response as shown below (this one is a response for the "api/v1/reservation/stops" api) :
 
-```
+```json
 {
     "status": "OK",
     "payload": [
@@ -209,14 +211,14 @@ Last, the API response are all being sent in a uniform manner using the **_Respo
 
 And when there is an exception (for example searching for a trip between two stops which are not linked by any bus) the following responses are sent back (result of "api/v1/reservation/tripsbystops" GET request) :
 
-```
+```json
 {
     "status": "NOT_FOUND",
     "errors": "No trips between source stop - 'STPD' and destination stop - 'STPC' are available at this time."
 }
 ```
 
-```
+```json
 {
     "status": "NOT_FOUND",
     "errors": {
